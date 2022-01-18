@@ -7,11 +7,14 @@
 
 </head>
 <body>
-    <a class="menu-item" href="/">
+    <a class="menu-item" href="{{ url_for('bp_open.index') }}">
         Home
     </a>
-    <a class="menu-item" href="/user">
+    <a class="menu-item" href="{{ url_for('bp_user.user_get') }}">
         User
+    </a>
+    <a class="menu-item" href="{{ url_for('bp_open.signup_get') }}">
+        Sign Up
     </a>
     <hr />
     {% block content %}

@@ -15,17 +15,13 @@ def create_app():
     # Init the SQLAlchemy object with our app object
     db.init_app(app)
 
+    # Register the open blueprint with the app object
     from blueprints.open import bp_open
     app.register_blueprint(bp_open)
 
-
-    @app.get('/user')
-    def user_get():
-        return render_template("user.html")
-
-    @app.post('/user')
-    def user_post():
-        return redirect(url_for('user_get'))
+    # Register the user blueprint with the app object
+    from blueprints.user import bp_user
+    app.register_blueprint(bp_user)
 
     return app
 
