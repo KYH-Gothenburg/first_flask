@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask_login import login_user
+
 from models import User
 from passlib.hash import argon2
 
@@ -21,7 +23,18 @@ def login_post():
     email = request.form['email']
     password = request.form['password']
     user = User.query.filter_by(email=email).first()
-    return redirect(url_for('bp_open.index'))
+    if user is None:
+        flash('Wrong email or password')
+        redirect(url_for('bp_open.login_get'))
+
+    if not argon2.verify(password, user.password):
+        flash('Wrong email or password')
+        redirect(url_for('bp_open.login_get'))
+
+    # User is verified. Login in user!
+    login_user(user)
+
+    return redirect(url_for('bp_user.user_get'))
 
 
 @bp_open.get('/signup')
