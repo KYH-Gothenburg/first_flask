@@ -20,6 +20,7 @@ def login_get():
 def login_post():
     email = request.form['email']
     password = request.form['password']
+    user = User.query.filter_by(email=email).first()
     return redirect(url_for('bp_open.index'))
 
 

@@ -1,3 +1,4 @@
+import dotenv
 from flask import Flask, render_template, request, redirect, url_for
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -27,6 +28,11 @@ def create_app():
     # Init the login manager with our app object
     login_manager.init_app(app)
 
+    # Create a user_loader function. Used by flask-login
+    @login_manager.user_loader
+    def load_user(user_id):
+        from models import User
+        return User.query.filter_by(id=user_id).first()
 
     # Register the open blueprint with the app object
     from blueprints.open import bp_open
@@ -37,6 +43,12 @@ def create_app():
     app.register_blueprint(bp_user)
 
     return app
+
+
+if __name__ == '__main__':
+    dotenv.load_dotenv()
+    app = create_app()
+    app.run()
 
 
 

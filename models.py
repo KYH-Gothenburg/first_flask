@@ -7,3 +7,16 @@ class User(db.Model):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(100))
     admin = db.Column(db.BOOLEAN, default=False)
+
+    def is_active(self):
+        return True
+
+    def is_authenticated(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
+
