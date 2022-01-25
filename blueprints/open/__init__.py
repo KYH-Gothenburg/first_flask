@@ -25,15 +25,18 @@ def login_post():
     user = User.query.filter_by(email=email).first()
     if user is None:
         flash('Wrong email or password')
-        redirect(url_for('bp_open.login_get'))
+        return redirect(url_for('bp_open.login_get'))
 
     if not argon2.verify(password, user.password):
         flash('Wrong email or password')
-        redirect(url_for('bp_open.login_get'))
+        return redirect(url_for('bp_open.login_get'))
 
     # User is verified. Login in user!
     login_user(user)
+    user.online = True
 
+    from app import db
+    db.session.commit()
     return redirect(url_for('bp_user.user_get'))
 
 

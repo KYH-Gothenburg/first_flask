@@ -8,5 +8,26 @@
     <h1 id="main-heading">User Page</h1>
     <p>Hello {{ current_user.name }}</p>
 
+    <table>
+        <tr>
+            <th>User Name</th>
+            <th>User Email</th>
+            <th>Online</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td class="center-content">
+                    {% if user.online %}
+                        <div class="circle online"></div>
+                    {% else %}
+                        <div class="circle offline"></div>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
 {% endblock %}
 
