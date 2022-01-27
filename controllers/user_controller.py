@@ -1,10 +1,15 @@
 from flask_login import current_user
 
 
-def get_all_users():
+def get_all_but_current_user():
     from models import User
     user = current_user
     return User.query.filter(User.id != user.id).all()
+
+
+def get_all_users():
+    from models import User
+    return User.query.all()
 
 
 def get_user_by_id(user_id):
