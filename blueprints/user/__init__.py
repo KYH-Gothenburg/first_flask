@@ -56,3 +56,11 @@ def api_get():
         'age': 34
     }
     return json.dumps(person)
+
+
+@bp_user.get('/chat/<user_id>')
+def chat_get(user_id):
+    chat_server_ip = request.remote_addr
+    user_id = int(user_id)
+    chat_with = get_user_by_id(user_id)
+    return render_template('chat.html', ip=chat_server_ip, chat_user=chat_with)
