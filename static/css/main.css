@@ -57,6 +57,19 @@ tr:nth-child(even) {
     position: relative;
     bottom: 1ex;
     font-size: 80%;
+    color: black;
+}
+
+.no-new-msg {
+    color: rgba(54, 54, 54, 0.7);
+}
+
+.new-msg {
+    color: green;
+}
+
+#message-symbol {
+    font-size: 1em;
 }
 
 

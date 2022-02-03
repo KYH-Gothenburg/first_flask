@@ -22,6 +22,7 @@ def get_user_messages():
 
 def get_unread_msg_count():
     user = current_user
+    print(user)
     msg_count = 0
 
     for msg in user.recv_messages:

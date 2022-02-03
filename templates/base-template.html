@@ -22,7 +22,7 @@
             Log Out
         </a>
         <a href="{{ url_for('bp_user.mailbox_get') }}">
-            <i class="fa fa-fw fa-envelope-open" id="message-symbol"></i>
+            <i class="fa fa-fw fa-envelope-open no-new-msg" id="message-symbol"></i>
                 <span class="sup" id="message-count"></span>
         </a>
     {% else %}
@@ -51,11 +51,15 @@
                     if(msgCount.unreadMessageCount === 0) {
                         messageSymbol.classList.remove("fa-envelope");
                         messageSymbol.classList.add("fa-envelope-open");
+                        messageSymbol.classList.remove("new-msg");
+                        messageSymbol.classList.add("no-new-msg");
                         messageCount.innerHTML = "";
                     }
                     else {
                         messageSymbol.classList.remove("fa-envelope-open");
                         messageSymbol.classList.add("fa-envelope");
+                        messageSymbol.classList.remove("no-new-msg");
+                        messageSymbol.classList.add("new-msg");
                         messageCount.innerHTML = msgCount.unreadMessageCount;
                     }
                 });

@@ -7,9 +7,52 @@
 {% block content %}
     <h1>Sending a message to {{ receiver.name }}</h1>
     <form action="{{ url_for('bp_user.message_post') }}" method="POST">
-        <input type="text" name="title" placeholder="Message Title" /> <br />
-        <input type="hidden" name="user_id" value="{{ receiver.id }}">
-        <textarea name="body" placeholder="Message Body"></textarea> <br />
+        <input type="text" id="title" name="title" placeholder="Message Title" /> <br />
+        <input type="hidden" id="user-id" name="user_id" value="{{ receiver.id }}">
+        <textarea name="body" id="body" placeholder="Message Body"></textarea> <br />
         <input class="send-button" type="submit" value="Send" />
     </form>
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="{{ url_for('static', filename='js/rsa.js') }}"></script>
+
+    <script>
+        let aesKey = key = CryptoJS.lib.WordArray.random(16).toString();
+
+        let rsaEncrypt = new JSEncrypt();
+        let publicKey = "Get the public key and insert it here";
+
+        let message = {
+            title: document.getElementById("title").value,
+            body: document.getElementById("body").innerHTML
+        }
+
+        let msgJson = JSON.stringify(message);
+
+        let encryptedMessage = CryptoJS.AES.encrypt(msgJson, aesKey);
+
+        rsaEncrypt.setPublicKey(publicKey);
+
+        let encryptedAESKey = rsaEncrypt.encrypt(aesKey);
+
+        let msgToSend = {
+            receiverId: document.getElementById("user-id");
+            encryptedMessage: encryptedMessage.toString(),
+            encryptedKey: encryptedAESKey.toString()
+        }
+
+        let jsonStrToSend = JSON.stringify(msgToSend);
+        fetch('url to post message', {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: jsonStrToSend
+        });
+
+    </script>
+
 {% endblock %}
