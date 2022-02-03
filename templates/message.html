@@ -25,7 +25,7 @@
         let aesKey = key = CryptoJS.lib.WordArray.random(16).toString();
 
         let rsaEncrypt = new JSEncrypt();
-        let publicKey = "Get the public key and insert it here";
+        let publicKey = document.getElementById("user-pubkey").value;
 
         let message = {
             title: document.getElementById("title").value,
@@ -41,13 +41,13 @@
         let encryptedAESKey = rsaEncrypt.encrypt(aesKey);
 
         let msgToSend = {
-            receiverId: document.getElementById("user-id");
+            receiverId: document.getElementById("user-id").value,
             encryptedMessage: encryptedMessage.toString(),
             encryptedKey: encryptedAESKey.toString()
         }
 
         let jsonStrToSend = JSON.stringify(msgToSend);
-        fetch('url to post message', {
+        fetch('http://127.0.0.1/message', {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
