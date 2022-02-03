@@ -35,11 +35,14 @@ def message_get(user_id):
 
 @bp_user.post('/message')
 def message_post():
-    title = request.form['title']
-    body = request.form['body']
-    receiver_id = request.form['user_id']
-    print(title)
-    create_message(title, body, receiver_id)
+    msg_str = request
+    msg = request.json
+    # title = request.form['title']
+    # body = request.form['body']
+    # receiver_id = request.form['user_id']
+    # print(title)
+    receiver_id = msg['receiverId']
+    create_message(msg_str, receiver_id)
     return redirect(url_for('bp_user.user_get'))
 
 
